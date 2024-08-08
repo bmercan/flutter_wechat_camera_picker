@@ -36,14 +36,6 @@ class CameraPickerState extends State<CameraPicker>
   CameraController get controller => innerController!;
   CameraController? innerController;
 
-  Widget? customChild;
-
-  Widget? bottomLeadingButton;
-
-  Widget? customBackButton;
-
-  Color? capturingRingColor;
-
   /// Whether the access to the camera or the audio session
   /// has been denied by the platform.
   bool accessDenied = false;
@@ -1229,7 +1221,8 @@ class CameraPickerState extends State<CameraPicker>
               if (!v.isRecordingVideo) backButton,
               const Spacer(),
               flashModeSwitch,
-              if (customChild != null && !v.isRecordingVideo) customChild!,
+              if (widget.customChild != null && !v.isRecordingVideo)
+                widget.customChild!,
             ],
           ),
         );
@@ -1369,16 +1362,18 @@ class CameraPickerState extends State<CameraPicker>
       height: isPortrait ? effectiveSize : null,
       padding: EdgeInsets.only(bottom: MediaQuery.paddingOf(context).bottom),
       child: Flex(
+        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         direction: isPortrait ? Axis.horizontal : Axis.vertical,
         verticalDirection: orientation == DeviceOrientation.landscapeLeft
             ? VerticalDirection.up
             : VerticalDirection.down,
         children: <Widget>[
-          Expanded(
-            child: Center(
-              child: bottomLeadingButton,
+          if (widget.bottomLeadingButton != null)
+            Expanded(
+              child: Center(
+                child: widget.bottomLeadingButton,
+              ),
             ),
-          ),
           const Spacer(),
           Expanded(
             child: Center(
@@ -1404,10 +1399,10 @@ class CameraPickerState extends State<CameraPicker>
   /// The back button.
   /// 返回键
   Widget buildBackButton(BuildContext context) {
-    if (customBackButton != null) {
+    if (widget.customBackButton != null) {
       return GestureDetector(
         onTap: () => Navigator.of(context).maybePop(),
-        child: customBackButton!,
+        child: widget.customBackButton!,
       );
     }
     return IconButton(
@@ -1481,7 +1476,8 @@ class CameraPickerState extends State<CameraPicker>
                             isCaptureButtonTapDown && isShootingButtonAnimate,
                         duration: pickerConfig.maximumRecordingDuration!,
                         size: size,
-                        ringsColor: capturingRingColor ?? theme.indicatorColor,
+                        ringsColor:
+                            widget.capturingRingColor ?? theme.indicatorColor,
                         ringsWidth: 3,
                       ),
                     ),

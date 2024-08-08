@@ -26,6 +26,10 @@ class CameraPicker extends StatefulWidget {
     this.pickerConfig = const CameraPickerConfig(),
     this.createPickerState,
     this.locale,
+    this.customChild,
+    this.bottomLeadingButton,
+    this.customBackButton,
+    this.capturingRingColor,
   });
 
   /// {@macro wechat_camera_picker.CameraPickerConfig}
@@ -37,6 +41,14 @@ class CameraPicker extends StatefulWidget {
 
   /// The [Locale] to determine text delegates for the picker.
   final Locale? locale;
+
+  final Widget? customChild;
+
+  final Widget? bottomLeadingButton;
+
+  final Widget? customBackButton;
+
+  final Color? capturingRingColor;
 
   /// Static method to create [AssetEntity] through camera.
   /// 通过相机创建 [AssetEntity] 的静态方法
