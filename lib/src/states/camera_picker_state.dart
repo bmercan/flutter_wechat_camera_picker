@@ -36,6 +36,14 @@ class CameraPickerState extends State<CameraPicker>
   CameraController get controller => innerController!;
   CameraController? innerController;
 
+  Widget? customChild;
+
+  Widget? bottomLeadingButton;
+
+  Widget? customBackButton;
+
+  Color? capturingRingColor;
+
   /// Whether the access to the camera or the audio session
   /// has been denied by the platform.
   bool accessDenied = false;
@@ -912,7 +920,16 @@ class CameraPickerState extends State<CameraPicker>
             handleErrorWithHandler(e, s, pickerConfig.onError);
           }),
       ]);
-      final XFile file = await controller.takePicture();
+      XFile file = await controller.takePicture();
+      if (currentCameraIndex == 1 &&
+          CameraPickerViewType.image == CameraPickerViewType.image) {
+        // When the front camera is used, the image will be flipped.
+        final File flippedFile = await flipImageHorizontally(file.path);
+        //TODO Delete the original file. FLIP IMAGE
+        //await file.delete();
+
+        file = XFile(flippedFile.path);
+      }
       await controller.pausePreview();
       final bool? isCapturedFileHandled = pickerConfig.onXFileCaptured?.call(
         file,
@@ -1043,6 +1060,7 @@ class CameraPickerState extends State<CameraPicker>
         pickerConfig.onMinimumRecordDurationNotMet?.call();
         return;
       }
+      // FLIP VIDEO
       controller.pausePreview();
       final bool? isCapturedFileHandled = pickerConfig.onXFileCaptured?.call(
         file,
@@ -1211,6 +1229,7 @@ class CameraPickerState extends State<CameraPicker>
               if (!v.isRecordingVideo) backButton,
               const Spacer(),
               flashModeSwitch,
+              if (customChild != null && !v.isRecordingVideo) customChild!,
             ],
           ),
         );
@@ -1267,7 +1286,7 @@ class CameraPickerState extends State<CameraPicker>
 
   /// Text widget for shooting tips.
   /// 拍摄的提示文字
-  Widget buildCaptureTips(CameraController? controller) {
+/*   Widget buildCaptureTips(CameraController? controller) {
     final String tips;
     if (pickerConfig.enableRecording) {
       if (pickerConfig.onlyEnableRecording) {
@@ -1295,7 +1314,7 @@ class CameraPickerState extends State<CameraPicker>
         ),
       ),
     );
-  }
+  } */
 
   /// Capture action's widget.
   /// 拍照操作区
@@ -1355,6 +1374,11 @@ class CameraPickerState extends State<CameraPicker>
             ? VerticalDirection.up
             : VerticalDirection.down,
         children: <Widget>[
+          Expanded(
+            child: Center(
+              child: bottomLeadingButton,
+            ),
+          ),
           const Spacer(),
           Expanded(
             child: Center(
@@ -1380,6 +1404,12 @@ class CameraPickerState extends State<CameraPicker>
   /// The back button.
   /// 返回键
   Widget buildBackButton(BuildContext context) {
+    if (customBackButton != null) {
+      return GestureDetector(
+        onTap: () => Navigator.of(context).maybePop(),
+        child: customBackButton!,
+      );
+    }
     return IconButton(
       onPressed: () => Navigator.of(context).maybePop(),
       tooltip: MaterialLocalizations.of(context).backButtonTooltip,
@@ -1451,7 +1481,7 @@ class CameraPickerState extends State<CameraPicker>
                             isCaptureButtonTapDown && isShootingButtonAnimate,
                         duration: pickerConfig.maximumRecordingDuration!,
                         size: size,
-                        ringsColor: theme.indicatorColor,
+                        ringsColor: capturingRingColor ?? theme.indicatorColor,
                         ringsWidth: 3,
                       ),
                     ),
@@ -1839,7 +1869,7 @@ class CameraPickerState extends State<CameraPicker>
             child: buildSettingActions(context),
           ),
           const Spacer(),
-          ExcludeSemantics(child: buildCaptureTips(innerController)),
+          //  ExcludeSemantics(child: buildCaptureTips(innerController)),
           Semantics(
             sortKey: const OrdinalSortKey(2),
             hidden: innerController == null,
