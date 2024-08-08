@@ -60,11 +60,19 @@ class CameraPicker extends StatefulWidget {
     CameraPickerPageRoute<AssetEntity> Function(Widget picker)?
         pageRouteBuilder,
     Locale? locale,
+    Widget? customBackButton,
+    Widget? bottomLeadingButton,
+    Color? capturingRingColor,
+    Widget? customChild,
   }) {
     final Widget picker = CameraPicker(
       pickerConfig: pickerConfig,
       createPickerState: createPickerState,
       locale: locale,
+      customBackButton: customBackButton,
+      bottomLeadingButton: bottomLeadingButton,
+      capturingRingColor: capturingRingColor,
+      customChild: customChild,
     );
     return Navigator.of(
       context,
