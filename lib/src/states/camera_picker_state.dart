@@ -933,6 +933,7 @@ class CameraPickerState extends State<CameraPicker>
       final AssetEntity? entity = await pushToViewer(
         file: file,
         viewType: CameraPickerViewType.image,
+        confirmButton: widget.confirmButton,
       );
       if (entity != null) {
         Navigator.of(context).pop(entity);
@@ -1064,6 +1065,7 @@ class CameraPickerState extends State<CameraPicker>
       final AssetEntity? entity = await pushToViewer(
         file: file,
         viewType: CameraPickerViewType.video,
+        confirmButton: widget.confirmButton,
       );
       if (entity != null) {
         Navigator.of(context).pop(entity);
@@ -1085,6 +1087,7 @@ class CameraPickerState extends State<CameraPicker>
   Future<AssetEntity?> pushToViewer({
     required XFile file,
     required CameraPickerViewType viewType,
+    Widget? confirmButton,
   }) async {
     if (viewType == CameraPickerViewType.image) {
       await precacheImage(FileImage(File(file.path)), context);
@@ -1094,6 +1097,7 @@ class CameraPickerState extends State<CameraPicker>
       pickerConfig: pickerConfig,
       viewType: viewType,
       previewXFile: file,
+      confirmButton: confirmButton,
     );
   }
 
@@ -1374,7 +1378,7 @@ class CameraPickerState extends State<CameraPicker>
                 child: widget.bottomLeadingButton,
               ),
             ),
-          const Spacer(),
+          //const Spacer(),
           Expanded(
             child: Center(
               child: buildCaptureButton(context, constraints),

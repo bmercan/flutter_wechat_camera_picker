@@ -336,7 +336,12 @@ class CameraPickerViewerState extends State<CameraPickerViewer> {
               sortKey: const OrdinalSortKey(2),
               child: Align(
                 alignment: AlignmentDirectional.centerEnd,
-                child: buildConfirmButton(context),
+                child: widget.confirmButton != null
+                    ? GestureDetector(
+                        onTap: createAssetEntityAndPop,
+                        child: widget.confirmButton,
+                      )
+                    : buildConfirmButton(context),
               ),
             ),
           ],

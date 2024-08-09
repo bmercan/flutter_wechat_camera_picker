@@ -30,6 +30,7 @@ class CameraPicker extends StatefulWidget {
     this.bottomLeadingButton,
     this.customBackButton,
     this.capturingRingColor,
+    this.confirmButton,
   });
 
   /// {@macro wechat_camera_picker.CameraPickerConfig}
@@ -50,6 +51,8 @@ class CameraPicker extends StatefulWidget {
 
   final Color? capturingRingColor;
 
+  final Widget? confirmButton;
+
   /// Static method to create [AssetEntity] through camera.
   /// 通过相机创建 [AssetEntity] 的静态方法
   static Future<AssetEntity?> pickFromCamera(
@@ -64,6 +67,7 @@ class CameraPicker extends StatefulWidget {
     Widget? bottomLeadingButton,
     Color? capturingRingColor,
     Widget? customChild,
+    Widget? confirmButton,
   }) {
     final Widget picker = CameraPicker(
       pickerConfig: pickerConfig,
@@ -73,6 +77,7 @@ class CameraPicker extends StatefulWidget {
       bottomLeadingButton: bottomLeadingButton,
       capturingRingColor: capturingRingColor,
       customChild: customChild,
+      confirmButton: confirmButton,
     );
     return Navigator.of(
       context,
