@@ -51,6 +51,7 @@ class CameraPicker extends StatefulWidget {
 
   final Color? capturingRingColor;
 
+  /// Custom confirm button.
   final Widget? confirmButton;
 
   /// Static method to create [AssetEntity] through camera.
