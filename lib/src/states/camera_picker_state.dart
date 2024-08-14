@@ -1225,6 +1225,7 @@ class CameraPickerState extends State<CameraPicker>
               if (!v.isRecordingVideo) backButton,
               const Spacer(),
               flashModeSwitch,
+              const Spacer(),
               if (widget.customChild != null && !v.isRecordingVideo)
                 widget.customChild!,
             ],
