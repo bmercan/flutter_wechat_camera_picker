@@ -21,17 +21,17 @@ import 'camera_picker_page_route.dart';
 /// The picker provides create an [AssetEntity] through the [CameraController].
 /// 该选择器可以通过 [CameraController] 创建 [AssetEntity]。
 class CameraPicker extends StatefulWidget {
-  const CameraPicker({
-    super.key,
-    this.pickerConfig = const CameraPickerConfig(),
-    this.createPickerState,
-    this.locale,
-    this.customChild,
-    this.bottomLeadingButton,
-    this.customBackButton,
-    this.capturingRingColor,
-    this.confirmButton,
-  });
+  const CameraPicker(
+      {super.key,
+      this.pickerConfig = const CameraPickerConfig(),
+      this.createPickerState,
+      this.locale,
+      this.customChild,
+      this.bottomLeadingButton,
+      this.customBackButton,
+      this.capturingRingColor,
+      this.confirmButton,
+      this.previewBackButton});
 
   /// {@macro wechat_camera_picker.CameraPickerConfig}
   final CameraPickerConfig pickerConfig;
@@ -54,6 +54,8 @@ class CameraPicker extends StatefulWidget {
   /// Custom confirm button.
   final Widget? confirmButton;
 
+  final Widget? previewBackButton;
+
   /// Static method to create [AssetEntity] through camera.
   /// 通过相机创建 [AssetEntity] 的静态方法
   static Future<AssetEntity?> pickFromCamera(
@@ -69,6 +71,7 @@ class CameraPicker extends StatefulWidget {
     Color? capturingRingColor,
     Widget? customChild,
     Widget? confirmButton,
+    Widget? previewBackButton,
   }) {
     final Widget picker = CameraPicker(
       pickerConfig: pickerConfig,
@@ -79,6 +82,7 @@ class CameraPicker extends StatefulWidget {
       capturingRingColor: capturingRingColor,
       customChild: customChild,
       confirmButton: confirmButton,
+      previewBackButton: previewBackButton,
     );
     return Navigator.of(
       context,

@@ -21,6 +21,7 @@ class CameraPickerViewer extends StatefulWidget {
     required this.pickerConfig,
     this.createViewerState,
     this.confirmButton,
+    this.previewBackButton,
   });
 
   /// The type of the viewer. (Image | Video)
@@ -32,6 +33,8 @@ class CameraPickerViewer extends StatefulWidget {
   final XFile previewXFile;
 
   final Widget? confirmButton;
+
+  final Widget? previewBackButton;
 
   /// {@macro wechat_camera_picker.CameraPickerConfig}
   final CameraPickerConfig pickerConfig;
@@ -50,6 +53,7 @@ class CameraPickerViewer extends StatefulWidget {
     CameraPickerViewerState Function()? createViewerState,
     bool useRootNavigator = true,
     Widget? confirmButton,
+    Widget? previewBackButton,
   }) {
     return Navigator.of(
       context,
@@ -62,6 +66,7 @@ class CameraPickerViewer extends StatefulWidget {
           pickerConfig: pickerConfig,
           createViewerState: createViewerState,
           confirmButton: confirmButton,
+          previewBackButton: previewBackButton,
         ),
         transitionsBuilder: (
           BuildContext context,

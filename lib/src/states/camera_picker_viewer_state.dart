@@ -199,7 +199,7 @@ class CameraPickerViewerState extends State<CameraPickerViewer> {
   Widget buildBackButton(BuildContext context) {
     return Semantics(
       sortKey: const OrdinalSortKey(0),
-      child: widget.confirmButton != null
+      child: widget.previewBackButton != null
           ? GestureDetector(
               onTap: () {
                 if (isSavingEntity) {
@@ -210,7 +210,7 @@ class CameraPickerViewerState extends State<CameraPickerViewer> {
                 }
                 Navigator.of(context).pop();
               },
-              child: widget.confirmButton,
+              child: widget.previewBackButton,
             )
           : IconButton(
               onPressed: () {
